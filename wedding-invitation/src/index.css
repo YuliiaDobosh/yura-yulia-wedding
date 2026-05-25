@@ -1,0 +1,466 @@
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #120b09;
+  color: white;
+  font-family: "Montserrat", sans-serif;
+  overflow-x: hidden;
+}
+
+.page {
+  min-height: 100vh;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(18, 11, 9, 0.78));
+}
+
+.heroContent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+  padding: 20px;
+}
+
+.smallText {
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+h1 {
+  font-family: "Great Vibes", cursive;
+  font-size: 90px;
+  font-weight: 400;
+  line-height: 0.9;
+}
+
+h1 span {
+  display: block;
+  font-size: 50px;
+}
+
+.openButton {
+  border: 1px solid white;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 14px 30px;
+  border-radius: 999px;
+  font-size: 15px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: 0.3s;
+}
+
+.openButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.03);
+}
+
+.date {
+  font-family: "Great Vibes", cursive;
+  font-size: 42px;
+}
+
+.invitation {
+  min-height: 100vh;
+  background: #f8f1eb;
+  color: #2c1d17;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+  padding: 40px 24px;
+}
+
+.fadeIn {
+  animation: fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dark {
+  color: #8f7668;
+}
+
+.invitation h2 {
+  font-family: "Great Vibes", cursive;
+  font-size: 70px;
+  font-weight: 400;
+}
+
+.inviteText {
+  max-width: 420px;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+.dateCard {
+  margin-top: 24px;
+  padding: 24px 32px;
+  border: 1px solid rgba(44, 29, 23, 0.25);
+  border-radius: 24px;
+}
+
+.dateCard p {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 12px;
+  margin-bottom: 10px;
+  color: #8f7668;
+}
+
+.dateCard strong {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+/* TIMELINE */
+
+.timeline {
+  position: relative;
+  min-height: 100vh;
+  background: #f8f1eb;
+  color: #2c1d17;
+  padding: 110px 24px 70px;
+  overflow: hidden;
+}
+
+.timelineTitle {
+  text-align: center;
+  font-family: "Great Vibes", cursive;
+  font-size: 72px;
+  font-weight: 400;
+  margin-bottom: 90px;
+  position: relative;
+  z-index: 5;
+}
+
+.timelineArrow {
+  position: absolute;
+  top: 190px;
+  left: 50%;
+  width: 430px;
+  height: calc(100% - 420px);
+  transform: translateX(-50%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.timelineArrow svg {
+  width: 100%;
+  height: 100%;
+}
+.timelineArrow::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: -8px;
+  left: 50%;
+
+  width: 18px;
+  height: 18px;
+
+  border-right: 6px solid #4b332d;
+  border-bottom: 6px solid #4b332d;
+
+  transform: translateX(-50%) rotate(45deg);
+
+  opacity: 0;
+}
+
+.timelineStart .timelineArrow::after {
+  animation: arrowHead 12s ease forwards;
+}
+
+@keyframes arrowHead {
+  0% {
+    opacity: 0;
+  }
+
+  90% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.timelinePath {
+  fill: none;
+
+  stroke: #4b332d;
+  stroke-width: 6;
+  stroke-linecap: round;
+
+  stroke-dasharray: 2600;
+  stroke-dashoffset: 2600;
+}
+
+.timelineStart .timelinePath {
+  animation: drawArrow 12s ease forwards;
+}
+
+@keyframes drawArrow {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.timelineItem {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 95px;
+}
+
+.timelineItem.left {
+  padding-right: 50%;
+}
+
+.timelineItem.right {
+  padding-left: 50%;
+}
+
+.timelineContent {
+  max-width: 280px;
+}
+
+.timelineContent h3 {
+  font-family: "Great Vibes", cursive;
+  font-size: 54px;
+  font-weight: 400;
+  margin-bottom: 12px;
+}
+
+.timelineContent p {
+  font-size: 24px;
+  line-height: 1.5;
+}
+
+.timelineIcon {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 42px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* RSVP */
+
+.rsvp {
+  min-height: 100vh;
+  background: #f8f1eb;
+  color: #2c1d17;
+  padding: 90px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.scriptTitle {
+  font-family: "Great Vibes", cursive;
+  font-size: 46px;
+  font-weight: 400;
+  margin-bottom: 42px;
+}
+
+.countdownLine {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 72px;
+}
+
+.countdownLine div {
+  min-width: 70px;
+}
+
+.countdownLine strong {
+  display: block;
+  font-family: "Great Vibes", cursive;
+  font-size: 58px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.countdownLine span {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #9a867c;
+}
+
+.countdownLine b {
+  font-family: "Great Vibes", cursive;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.rsvpText {
+  max-width: 520px;
+  font-size: 22px;
+  line-height: 1.6;
+  margin-bottom: 48px;
+}
+
+.rsvpButton {
+  border: none;
+  background: #6f5f58;
+  color: white;
+  padding: 20px 42px;
+  border-radius: 999px;
+  font-size: 20px;
+  font-family: "Montserrat", sans-serif;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.rsvpButton:hover {
+  background: #594b45;
+  transform: scale(1.03);
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 64px;
+  }
+
+  h1 span {
+    font-size: 38px;
+  }
+
+  .date {
+    font-size: 34px;
+  }
+
+  .invitation h2 {
+    font-size: 56px;
+  }
+
+  .inviteText {
+    font-size: 16px;
+  }
+
+  .timeline {
+    padding: 90px 20px 50px;
+  }
+
+  .timelineTitle {
+    font-size: 58px;
+    margin-bottom: 70px;
+  }
+
+  .timelineArrow {
+    left: 58%;
+    width: 260px;
+  }
+
+  .timelineItem,
+  .timelineItem.left,
+  .timelineItem.right {
+    padding: 0 0 0 30px;
+    justify-content: flex-start;
+    gap: 18px;
+  }
+
+  .timelineContent h3 {
+    font-size: 42px;
+  }
+
+  .timelineContent p {
+    font-size: 18px;
+  }
+
+  .timelineIcon {
+    width: 66px;
+    height: 66px;
+    font-size: 28px;
+  }
+
+  .scriptTitle {
+    font-size: 38px;
+  }
+
+  .countdownLine {
+    gap: 8px;
+  }
+
+  .countdownLine div {
+    min-width: 58px;
+  }
+
+  .countdownLine strong {
+    font-size: 42px;
+  }
+
+  .countdownLine b {
+    font-size: 36px;
+  }
+
+  .rsvpText {
+    font-size: 18px;
+  }
+
+  .rsvpButton {
+    font-size: 16px;
+    padding: 16px 28px;
+  }
+}
+
+.timelineStart .timelinePath {
+  animation: drawArrow 12s ease-in-out forwards;
+}
