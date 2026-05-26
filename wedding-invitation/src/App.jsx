@@ -1,12 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import heroImage from "./assets/hero.jpg";
+import envelopeImage from "./assets/envelope.png";
+import calendarImage from "./assets/calendar.png";
+import timelineImage from "./assets/timeline.jpeg";
+import restaurantImage from "./assets/restaurant.png";
+import musicImage from "./assets/music-photo.png";
+import weddingMusic from "./assets/music.mp3";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
-  const [timelineStarted, setTimelineStarted] = useState(false);
-  const timelineRef = useRef(null);
 
-  const weddingDate = new Date("2026-09-26T15:00:00");
+  const weddingDate = new Date("2026-06-01T13:00:00");
+  const audioRef = useRef(null);
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
 
   const calculateTimeLeft = () => {
     const difference = weddingDate - new Date();
@@ -33,26 +39,11 @@ function App() {
     return () => clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setTimelineStarted(true);
-      },
-      { threshold: 0.35 }
-    );
-
-    if (timelineRef.current) observer.observe(timelineRef.current);
-
-    return () => observer.disconnect();
-  }, [isOpen]);
-
   return (
     <main className="page">
       {!isOpen && (
         <section className="hero">
-          <img src={heroImage} alt="Юра та Юля" className="heroImage" />
+          <img src={heroImage} alt="Wedding" className="heroImage" />
           <div className="overlay"></div>
 
           <div className="heroContent">
@@ -62,91 +53,109 @@ function App() {
               Юра <span>&</span> Юля
             </h1>
 
-            <button className="openButton" onClick={() => setIsOpen(true)}>
-              відкрити запрошення
-            </button>
+            <button
+  className="openButton"
+  onClick={() => {
+    setIsOpen(true);
 
-            <p className="date">26.09.2026</p>
+    setTimeout(() => {
+      if (audioRef.current) {
+        audioRef.current.play();
+        setIsMusicPlaying(true);
+      }
+    }, 300);
+  }}
+>
+  відкрити запрошення
+</button>
+
+            <p className="date">01.06.2026</p>
           </div>
         </section>
       )}
 
       {isOpen && (
         <>
+        <section className="musicSection fadeIn">
+  <img
+    src={musicImage}
+    alt="Wedding music"
+    className="musicImage"
+  />
+
+  <div className="musicContent">
+    <h2>Ми одружуємось!</h2>
+
+    <p>Музика для атмосфери ✨</p>
+
+    <button
+      className="musicButton"
+      onClick={() => {
+        if (!audioRef.current) return;
+
+        if (isMusicPlaying) {
+          audioRef.current.pause();
+          setIsMusicPlaying(false);
+        } else {
+          audioRef.current.play();
+          setIsMusicPlaying(true);
+        }
+      }}
+    >
+      {isMusicPlaying ? "⏸ Пауза" : "▶ Музика"}
+    </button>
+  </div>
+
+  <audio ref={audioRef} src={weddingMusic} loop />
+</section>
           <section className="invitation fadeIn">
-            <p className="smallText dark">Дорогі гості</p>
 
-            <h2>Саша & Владік</h2>
+            <img
+              src={envelopeImage}
+              alt="Запрошення"
+              className="invitePhotoLarge"
+            />
 
-            <p className="inviteText">
-              Ми з радістю запрошуємо вас розділити з нами день, коли дві
-              історії стануть однією.
-            </p>
-
-            <div className="dateCard">
-              <p>субота</p>
-              <strong>26 вересня 2026</strong>
-            </div>
+            <img
+              src={calendarImage}
+              alt="Календар"
+              className="calendarImage"
+            />
           </section>
 
-          <section
-            ref={timelineRef}
-            className={`timeline ${timelineStarted ? "timelineStart" : ""}`}
-          >
-            <h2 className="timelineTitle">Таймінг</h2>
+          <section className="timelineImageSection">
+            <img
+              src={timelineImage}
+              alt="Таймінг"
+              className="timelineImage"
+            />
+          </section>
 
-  <div className="timelineArrow">
-  <svg viewBox="0 0 400 1500" preserveAspectRatio="none">
-    <path
-      className="timelinePath"
-      d="M 200 0 
-         C 330 130, 70 250, 200 380 
-         C 330 510, 70 630, 200 760 
-         C 330 890, 70 1010, 200 1140 
-         C 330 1270, 70 1390, 200 1500"
-    />
-  </svg>
-</div>  
+          <section className="location">
+            <p className="smallText dark">Локація</p>
 
-            <div className="timelineItem left">
-              <div className="timelineContent">
-                <h3>13:00</h3>
-                <p>Початок свята та фуршет</p>
-              </div>
-              <div className="timelineIcon">🥂</div>
-            </div>
+            <h2>Місце святкування</h2>
 
-            <div className="timelineItem right">
-              <div className="timelineIcon">💍</div>
-              <div className="timelineContent">
-                <h3>14:00</h3>
-                <p>Церемонія кохання</p>
-              </div>
-            </div>
+            <img
+              src={restaurantImage}
+              alt="Ресторан Наша Куховарня"
+              className="restaurantImage"
+            />
 
-            <div className="timelineItem left">
-              <div className="timelineContent">
-                <h3>15:30</h3>
-                <p>Святкова вечеря</p>
-              </div>
-              <div className="timelineIcon">🍽️</div>
-            </div>
+            <p className="locationText">
+              Ресторан “Наша Куховарня”
+              <br />
+              м. Радехів, вул. Стоянівська, 31
+            </p>
 
-            <div className="timelineItem right">
-              <div className="timelineIcon">🎂</div>
-              <div className="timelineContent">
-                <h3>20:30</h3>
-                <p>Торт і солодкі миті</p>
-              </div>
-            </div>
-
-            <div className="timelineItem left">
-              <div className="timelineContent">
-                <h3>22:00</h3>
-                <p>Тепле завершення вечора</p>
-              </div>
-              <div className="timelineIcon">🕯️</div>
-            </div>
+            <a
+              className="mapButton"
+              href="https://nashakuhovarnya.com.ua/about"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Відкрити карту
+            </a>
           </section>
 
           <section className="rsvp">
@@ -157,17 +166,23 @@ function App() {
                 <strong>{timeLeft.days}</strong>
                 <span>Дні</span>
               </div>
+
               <b>:</b>
+
               <div>
                 <strong>{timeLeft.hours}</strong>
                 <span>Год</span>
               </div>
+
               <b>:</b>
+
               <div>
                 <strong>{timeLeft.minutes}</strong>
                 <span>Хв</span>
               </div>
+
               <b>:</b>
+
               <div>
                 <strong>{timeLeft.seconds}</strong>
                 <span>Сек</span>
