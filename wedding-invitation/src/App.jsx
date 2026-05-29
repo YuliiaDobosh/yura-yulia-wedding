@@ -6,6 +6,7 @@ import timelineImage from "./assets/timeline.jpeg";
 import restaurantImage from "./assets/restaurant.png";
 import musicImage from "./assets/music-photo.png";
 import weddingMusic from "./assets/music.mp3";
+import dressCodeVideo from "./assets/dresscode.mp4";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +27,12 @@ function App() {
       };
     }
 
-    return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    return {
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    };
   };
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
@@ -38,6 +44,29 @@ function App() {
 
     return () => clearInterval(timer);
   }, []);
+
+  const openInvitation = () => {
+    setIsOpen(true);
+
+    setTimeout(() => {
+      if (audioRef.current) {
+        audioRef.current.play();
+        setIsMusicPlaying(true);
+      }
+    }, 300);
+  };
+
+  const toggleMusic = () => {
+    if (!audioRef.current) return;
+
+    if (isMusicPlaying) {
+      audioRef.current.pause();
+      setIsMusicPlaying(false);
+    } else {
+      audioRef.current.play();
+      setIsMusicPlaying(true);
+    }
+  };
 
   return (
     <main className="page">
@@ -53,21 +82,9 @@ function App() {
               Юра <span>&</span> Юля
             </h1>
 
-            <button
-  className="openButton"
-  onClick={() => {
-    setIsOpen(true);
-
-    setTimeout(() => {
-      if (audioRef.current) {
-        audioRef.current.play();
-        setIsMusicPlaying(true);
-      }
-    }, 300);
-  }}
->
-  відкрити запрошення
-</button>
+            <button className="openButton" onClick={openInvitation}>
+              Відкрити запрошення
+            </button>
 
             <p className="date">01.06.2026</p>
           </div>
@@ -76,40 +93,27 @@ function App() {
 
       {isOpen && (
         <>
-        <section className="musicSection fadeIn">
-  <img
-    src={musicImage}
-    alt="Wedding music"
-    className="musicImage"
-  />
+          <section className="musicSection fadeIn">
+            <img
+              src={musicImage}
+              alt="Wedding music"
+              className="musicImage"
+            />
 
-  <div className="musicContent">
-    <h2>Ми одружуємось!</h2>
+            <div className="musicContent">
+              <h2>Ми одружуємось!</h2>
 
-    <p>Музика для атмосфери ✨</p>
+              <p>Музика для атмосфери ✨</p>
 
-    <button
-      className="musicButton"
-      onClick={() => {
-        if (!audioRef.current) return;
+              <button className="musicButton" onClick={toggleMusic}>
+                {isMusicPlaying ? "⏸ Пауза" : "▶ Музика"}
+              </button>
+            </div>
 
-        if (isMusicPlaying) {
-          audioRef.current.pause();
-          setIsMusicPlaying(false);
-        } else {
-          audioRef.current.play();
-          setIsMusicPlaying(true);
-        }
-      }}
-    >
-      {isMusicPlaying ? "⏸ Пауза" : "▶ Музика"}
-    </button>
-  </div>
+            <audio ref={audioRef} src={weddingMusic} loop />
+          </section>
 
-  <audio ref={audioRef} src={weddingMusic} loop />
-</section>
           <section className="invitation fadeIn">
-
             <img
               src={envelopeImage}
               alt="Запрошення"
@@ -158,6 +162,17 @@ function App() {
             </a>
           </section>
 
+          <section className="dressCode">
+            <video
+              className="dressCodeVideo"
+              src={dressCodeVideo}
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          </section>
+
           <section className="rsvp">
             <p className="scriptTitle">Ми скажемо «Так» через ...</p>
 
@@ -190,11 +205,13 @@ function App() {
             </div>
 
             <p className="rsvpText">
-              Будь ласка, підтвердьте свою присутність на нашому весіллі. Ми з
-              нетерпінням чекаємо на вас!
+              Будь ласка, підтвердьте свою присутність на нашому весіллі.
+              Ми з нетерпінням чекаємо на вас!
             </p>
 
-            <button className="rsvpButton">Підтвердити присутність</button>
+            <button className="rsvpButton">
+              Підтвердити присутність
+            </button>
           </section>
         </>
       )}
@@ -203,3 +220,4 @@ function App() {
 }
 
 export default App;
+
