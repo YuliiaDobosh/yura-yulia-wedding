@@ -13,10 +13,36 @@ function App() {
 
   const weddingDate = new Date("2026-06-01T13:00:00");
   const audioRef = useRef(null);
+  const dressVideoRef = useRef(null);
+  const dressSectionRef = useRef(null);
   const [isMusicPlaying, setIsMusicPlaying] = useState(false);
 
   const calculateTimeLeft = () => {
     const difference = weddingDate - new Date();
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (!dressVideoRef.current) return;
+
+          if (entry.isIntersecting) {
+            dressVideoRef.current.play();
+          } else {
+            dressVideoRef.current.pause();
+            dressVideoRef.current.currentTime = 0;
+          }
+        },
+        {
+          threshold: 0.6,
+        }
+      );
+
+      if (dressSectionRef.current) {
+        observer.observe(dressSectionRef.current);
+      }
+
+      return () => observer.disconnect();
+    }, []);
 
     if (difference > 0) {
       return {
@@ -162,14 +188,15 @@ function App() {
             </a>
           </section>
 
-          <section className="dressCode">
+          <section className="dressCode" ref={dressSectionRef}>
             <video
+              ref={dressVideoRef}
               className="dressCodeVideo"
               src={dressCodeVideo}
-              autoPlay
               muted
               loop
               playsInline
+              preload="metadata"
             />
           </section>
 
